@@ -38,17 +38,22 @@ for i in j["members"]:
 		res = sendResquest(base + realm + "/" + name + end)
 		p = json.loads(res.content)
 
-		ilvl = p.get("items").get("averageItemLevelEquipped")
+		if p is not None:
+			items = p.get("items")
 
-		if ilvl>=915 and ilvl<930:
-			n = n + 1
-			print("\tName:{}".format(name))
-			print("\tClass:{}".format(pClass))
-			print("\tLevel:{}".format(level))
-			print("\tItem Level:{}".format(ilvl))
-			print("")
+			if items is not None:
+				ilvl = items.get("averageItemLevelEquipped")
+
+				if ilvl is not None:
+					if ilvl>=915 and ilvl<930:
+						n = n + 1
+						print("\tName:{}".format(name))
+						print("\tClass:{}".format(pClass))
+						print("\tLevel:{}".format(level))
+						print("\tItem Level:{}".format(ilvl))
+						print("")
 
 
 
 
-print("Number of Hunter:{}".format(n))
+print("Number of Players:{}".format(n))

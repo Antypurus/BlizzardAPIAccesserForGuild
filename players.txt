@@ -1,0 +1,106 @@
+	Name:Imrík
+	Class:Hunter
+	Level:110
+	Item Level:928
+
+	Name:Jajjemen
+	Class:Rogue
+	Level:110
+	Item Level:923
+
+	Name:Theslipper
+	Class:Hunter
+	Level:110
+	Item Level:924
+
+	Name:Pecke
+	Class:Rogue
+	Level:110
+	Item Level:917
+
+	Name:Kyriana
+	Class:Priest
+	Level:110
+	Item Level:928
+
+	Name:Tüskés
+	Class:Hunter
+	Level:110
+	Item Level:918
+
+	Name:Aqentos
+	Class:Priest
+	Level:110
+	Item Level:927
+
+	Name:Werehunt
+	Class:Hunter
+	Level:110
+	Item Level:929
+
+	Name:Rhaokun
+	Class:Rogue
+	Level:110
+	Item Level:915
+
+	Name:Belindaash
+	Class:Rogue
+	Level:110
+	Item Level:915
+
+	Name:Tahita
+	Class:Hunter
+	Level:110
+	Item Level:925
+
+	Name:Jagsx
+	Class:Rogue
+	Level:110
+	Item Level:927
+
+	Name:Ventaniä
+	Class:Hunter
+	Level:110
+	Item Level:922
+
+	Name:Yaheene
+	Class:Hunter
+	Level:110
+	Item Level:919
+
+	Name:Momento
+	Class:Hunter
+	Level:110
+	Item Level:922
+
+	Name:Papipis
+	Class:Priest
+	Level:110
+	Item Level:916
+
+	Name:Morgani
+	Class:Hunter
+	Level:110
+	Item Level:924
+
+	Name:Caçacornudos
+	Class:Hunter
+	Level:110
+	Item Level:915
+
+	Name:Nué
+	Class:Hunter
+	Level:110
+	Item Level:921
+
+	Name:Eanora
+	Class:Rogue
+	Level:110
+	Item Level:928
+
+	Name:Ole
+	Class:Rogue
+	Level:110
+	Item Level:917
+
+Number of Players:21

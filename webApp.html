@@ -1,0 +1,198 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Guild Thing</title>
+</head>
+
+<body>
+    <ul id="list">
+    </ul>
+
+    <inp>
+        <input type="checkbox" id="Warrior">Warrior</input>
+        <br>
+        <input type="checkbox" id="Paladin">Paladin</input>
+        <br>
+        <input type="checkbox" id="Hunter">Hunter</input>
+        <br>
+        <input type="checkbox" id="Rogue">Rogue</input>
+        <br>
+        <input type="checkbox" id="Priest">Priest</input>
+        <br>
+        <input type="checkbox" id="Death Knigth">Death Knigth</input>
+        <br>
+        <input type="checkbox" id="Shaman">Shaman</input>
+        <br>
+        <input type="checkbox" id="Mage">Mage</input>
+        <br>
+        <input type="checkbox" id="Warlock">Warlock</input>
+        <br>
+        <input type="checkbox" id="Monk">Monk</input>
+        <br>
+        <input type="checkbox" id="Druid">Druid</input>
+        <br>
+        <input type="checkbox" id="Demon Hunter">Demon Hunter</input>
+        <br> iLvl Range:
+        <input type="number" id="lower" value="0"> -
+        <input type="number" id="upper" value="0">(leave as 0 if you dont want a maximum value)
+        <br>
+        <input type="submit" id="submit">
+        <br>
+        </form>
+
+        <script>
+            /**
+            Iterates over the inputs to check wich classes were selected to be searched for
+            **/
+            function getClasses() {
+                let classes = []
+                if (document.getElementById("Warrior").checked) {
+                    classes.push(1);
+                }
+                if (document.getElementById("Paladin").checked) {
+                    classes.push(2);
+                }
+                if (document.getElementById("Hunter").checked) {
+                    classes.push(3);
+                }
+                if (document.getElementById("Rogue").checked) {
+                    classes.push(4);
+                }
+                if (document.getElementById("Priest").checked) {
+                    classes.push(5);
+                }
+                if (document.getElementById("Death Knigth").checked) {
+                    classes.push(6);
+                }
+                if (document.getElementById("Shaman").checked) {
+                    classes.push(7);
+                }
+                if (document.getElementById("Mage").checked) {
+                    classes.push(8);
+                }
+                if (document.getElementById("Warlock").checked) {
+                    classes.push(9);
+                }
+                if (document.getElementById("Monk").checked) {
+                    classes.push(10);
+                }
+                if (document.getElementById("Druid").checked) {
+                    classes.push(11);
+                }
+                if (document.getElementById("Demon Hunter").checked) {
+                    classes.push(12);
+                }
+                return classes
+            }
+
+            /**
+            Maps the API class identifier to the class name            
+            **/
+            let classMap = {
+                0: "None",
+                1: "Warrior",
+                2: "Paladin",
+                3: "Hunter",
+                4: "Rogue",
+                5: "Priest",
+                6: "Death Knigth",
+                7: "Shaman",
+                8: "Mage",
+                9: "Warlock",
+                10: "Monk",
+                11: "Druid",
+                12: "Demon Hunter"
+            }
+
+            document.getElementById("submit").onclick = function () {
+
+                //strings used to construct individual player URI's
+                let base = "https://eu.api.battle.net/wow/character/"
+                let end = "?fields=items&locale=en_GB&apikey=54ynts6k49dsq5vqm85ecmask7gmjkqa"
+
+                let classes = getClasses();
+                if (classes.length != 0) {
+                    document.getElementById("list").innerHTML = ""
+
+                    let lower = document.getElementById("lower").value
+                    let upper = document.getElementById("upper").value
+
+                    let mode = "range"
+                    if (upper == 0) {
+                        mode = "above"
+                    }
+                    if (lower != 0) {
+
+                        //URI for guild in the API
+                        let url = "https://eu.api.battle.net/wow/guild/%20Aggra%20(Português)/For%20The%20Invicta?fields=members&locale=en_GB&apikey=54ynts6k49dsq5vqm85ecmask7gmjkqa"
+
+                        //Obtain information to iterate over
+                        var xmlHttp = new XMLHttpRequest();
+                        xmlHttp.onreadystatechange = function () {
+                            if (xmlHttp.readyState == 4) {
+                                if (xmlHttp.responseText != null) {
+                                    let resp = JSON.parse(xmlHttp.responseText)
+                                    let members = resp.members
+                                    let html = ""
+
+                                    //build the list with the relevant information
+                                    for (var i = 0; i < members.length; ++i) {
+
+                                        //alias to the character object of the player
+                                        let char = members[i].character
+                                        if (classes.indexOf(char.class) != -1 && char.level >= 110) {
+
+                                            //obtain relevant information
+                                            name = char.name
+                                            realm = encodeURIComponent(char.realm)
+
+                                            //create uri for player api progile resource
+                                            let uri = base + realm + "/" + name + end
+
+                                            //request it
+                                            let ajax = new XMLHttpRequest()
+                                            ajax.onreadystatechange = function () {
+                                                if (ajax.readyState == 4) {
+                                                    if (ajax.responseText != null) {
+                                                        let response = JSON.parse(ajax.responseText)
+                                                        let items = response.items
+                                                        //if the player is within the requirment add him to the list
+                                                        if (items != null) {
+                                                            let ilvl = items.averageItemLevelEquipped
+
+                                                            if (mode == "above") {
+                                                                if (ilvl >= lower) {
+                                                                    html += "<li>" + "Name:" + char.name + " <br>Class:" + classMap[char.class] + " <br>iLvl:" + ilvl + "</li>"
+                                                                    let list = document.getElementById("list");
+                                                                    list.innerHTML = html;
+                                                                }
+                                                            } else if (mode == "range") {
+                                                                if (ilvl >= lower && ilvl <= upper) {
+                                                                    html += "<li>" + "Name:" + char.name + " <br>Class:" + classMap[char.class] + " <br>iLvl:" + ilvl + "</li>"
+                                                                    let list = document.getElementById("list");
+                                                                    list.innerHTML = html;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            ajax.open("GET", uri, true); // true for asynchronous 
+                                            ajax.send(null);
+                                        }
+                                    }
+                                    let list = document.getElementById("list");
+                                    list.innerHTML = html;
+                                }
+                            }
+                        }
+                        xmlHttp.open("GET", url, true); // true for asynchronous 
+                        xmlHttp.send(null);
+                    }
+                }
+            }
+        </script>
+</body>
+
+</html>
